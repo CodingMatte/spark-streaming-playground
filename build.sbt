@@ -4,7 +4,7 @@ version := "0.1"
 
 scalaVersion := "2.12.10"
 
-val sparkVersion = "3.0.2"
+val sparkVersion = "3.4.0"
 val postgresVersion = "42.2.2"
 val cassandraConnectorVersion = "3.0.0" // preview version at the moment of writing (July 7, 2020)
 val akkaVersion = "2.5.24"
@@ -30,13 +30,13 @@ libraryDependencies ++= Seq(
 
   // streaming
   "org.apache.spark" %% "spark-streaming" % sparkVersion,
-  
+
   // streaming-kafka
   "org.apache.spark" % "spark-sql-kafka-0-10_2.12" % sparkVersion,
 
   // low-level integrations
   "org.apache.spark" %% "spark-streaming-kafka-0-10" % sparkVersion,
-  
+
   // akka
   "com.typesafe.akka" %% "akka-remote" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaVersion,
@@ -64,5 +64,8 @@ libraryDependencies ++= Seq(
 )
 
 // Include Java source directories
-unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "java"
-unmanagedSourceDirectories in Test += baseDirectory.value / "src" / "test" / "java"
+Compile / unmanagedSourceDirectories += baseDirectory.value / "src" / "main" / "java"
+Test / unmanagedSourceDirectories += baseDirectory.value / "src" / "test" / "java"
+
+// Resolve version conflict
+libraryDependencySchemes += "org.scala-lang.modules" %% "scala-parser-combinators" % VersionScheme.EarlySemVer
