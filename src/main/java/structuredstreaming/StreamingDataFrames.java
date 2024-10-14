@@ -7,8 +7,6 @@ import org.apache.spark.sql.streaming.StreamingQuery;
 
 import static common.Schemas.stocksSchema;
 import static org.apache.spark.sql.functions.*;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.spark.sql.streaming.Trigger;
 
 public class StreamingDataFrames {
