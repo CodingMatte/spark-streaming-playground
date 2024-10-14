@@ -26,11 +26,6 @@ public class StreamingDataFrames {
               "--add-opens java.base/java.nio=ALL-UNNAMED --add-exports java.base/sun.nio.ch=ALL-UNNAMED")
           .getOrCreate();
 
-  static {
-    // Set log level to WARN for streaming-related logs
-    Logger.getLogger("org.apache.spark.sql.execution.streaming").setLevel(Level.WARN);
-  }
-
   // Reading data from a socket
   public static void readFromSocket() throws Exception {
     Dataset<Row> lines =

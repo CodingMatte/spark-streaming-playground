@@ -72,3 +72,15 @@ dependencyOverrides += "org.scala-lang.modules" %% "scala-parser-combinators" % 
 // Java 17 compatibility
 Compile / javacOptions ++= Seq("--release", "17")
 Compile / scalacOptions ++= Seq("-target:jvm-17")
+
+// Enable forking for run and test tasks to apply javaOptions
+Compile / fork := true
+Test / fork := true
+
+// Add JVM options globally for the project
+javaOptions ++= Seq(
+  "--add-opens", "java.base/java.nio=ALL-UNNAMED",
+  "--add-exports", "java.base/sun.nio.ch=ALL-UNNAMED",
+  "--add-opens", "java.base/sun.nio.ch=ALL-UNNAMED",
+  "--add-exports", "java.base/jdk.internal.misc=ALL-UNNAMED"
+)
