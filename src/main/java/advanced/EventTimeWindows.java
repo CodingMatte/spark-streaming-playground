@@ -141,6 +141,35 @@ public class EventTimeWindows {
         .awaitTermination();
   }
 
+  public static void aggregateByProcessingTime() throws Exception {
+    Dataset<Row> linesCharCountByWindowDF =
+        spark
+            .readStream()
+            .format("socket")
+            .option("host", "localhost")
+            .option("port", 12346)
+            .load()
+            .select(
+                col("value"),
+                current_timestamp()
+                    .as("processingTime")) // this is how you add processing time to a record
+            .groupBy(window(col("processingTime"), "10 seconds").as("window"))
+            .agg(
+                sum(length(col("value")))
+                    .as("charCount")) // counting characters every 10 seconds by processing time
+            .select(
+                col("window").getField("start").as("start"),
+                col("window").getField("end").as("end"),
+                col("charCount"));
+
+    linesCharCountByWindowDF
+        .writeStream()
+        .format("console")
+        .outputMode("complete")
+        .start()
+        .awaitTermination();
+  }
+
   public static void main(String[] args) throws Exception {
     // aggregatePurchasesBySlidingWindow();
     aggregatePurchasesByTumblingWindow();
