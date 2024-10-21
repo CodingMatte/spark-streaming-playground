@@ -11,7 +11,7 @@ import static org.apache.spark.sql.functions.*;
 public class IntegratingKafka {
 
   // initialize spark session from spark utils
-  private static final SparkUtils sparkUtils = new SparkUtils("Streaming Datasets", "local[*]");
+  private static final SparkUtils sparkUtils = new SparkUtils("Integrating Kafka", "local[*]");
   private static final SparkSession spark = sparkUtils.getSparkSession();
 
   public static void readFromKafka() throws Exception {
